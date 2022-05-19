@@ -1,10 +1,12 @@
 import React from "react";
 import UsersList from "../components/UsersList";
+
 const Users = () => {
   const USERS = [
     {
       id: "u1",
-      image: "../../images/tree.jpg",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpwnFLJjXsj5EF7ZP4Lp2UgO1FEekQvIejpw&usqp=CAU",
       name: "Max",
       places: 3,
     },

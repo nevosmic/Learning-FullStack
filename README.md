@@ -2,4 +2,4 @@
 
 This is my first Full Stack App :)
 
-An app in which each user can share the places he visited.
+An app where users can share the places they have visited and traveled and see the places their friends have visited.

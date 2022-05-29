@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewPlace from "./places/pages/NewPlace";
 import Users from "./user/pages/Users";
 import UserPlaces from "./places/pages/UserPlaces";
-import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import MainNavigation from "./shared/Navigation/MainNavigation";
 
 const App = () => {
   return (

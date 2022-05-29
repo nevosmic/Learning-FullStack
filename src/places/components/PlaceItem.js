@@ -3,6 +3,7 @@ import React, { Fragment, useState } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card/Card";
 import Modal from "../../shared/components/UIElements/Modal/Modal";
+import Map from "../../shared/components/UIElements/Map/Map";
 import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
@@ -10,6 +11,28 @@ const PlaceItem = (props) => {
 
   const openMapModalHandler = () => setShowMapModal(true);
   const closeMapModalHandler = () => setShowMapModal(false);
+
+  /*  <iframe
+            title="map"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            scrolling="no"
+            marginHeight="0"
+            marginWidth="0"
+            src={
+              "https://maps.google.com/maps?q=" +
+              props.coordinates.lat.toString() +
+              "," +
+              props.coordinates.lng.toString() +
+              "&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            }
+          /> 
+          
+          <script
+            type="text/javascript"
+            src="https://embedmaps.com/google-maps-authorization/script.js?id=5a33be79e53caf0a07dfec499abf84b7b481f165"
+          ></script>*/
 
   return (
     <Fragment>
@@ -22,7 +45,7 @@ const PlaceItem = (props) => {
         footer={<Button onClick={closeMapModalHandler}>CLOSE</Button>}
       >
         <div className="map-container">
-          <h2>THE MAP</h2>
+          <Map center={props.coordinates} zoom={16} />
         </div>
       </Modal>
       <li className="place-item">

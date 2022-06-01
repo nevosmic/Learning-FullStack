@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 
 import { validate } from "../../utils/validators";
 import "./Input.css";
@@ -29,6 +29,14 @@ const Input = (props) => {
     isTouched: false,
     isValid: false,
   });
+
+  /*update input in NewPlace every time the value and isValid changing */
+  const { id, onInput } = props;
+  const { value, isValid } = currentState;
+
+  useEffect(() => {
+    onInput(id, value, isValid);
+  }, [id, value, isValid, onInput]);
 
   const changeHandler = (event) => {
     //validate value

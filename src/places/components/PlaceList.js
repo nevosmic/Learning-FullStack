@@ -1,7 +1,7 @@
 import React from "react";
 
-import Button from "../../shared/FormElements/Button/Button";
-import Card from "../../shared/UIElements/Card/Card";
+import Button from "../../shared/components/FormElements/Button/Button";
+import Card from "../../shared/components/UIElements/Card/Card";
 import PlaceItem from "./PlaceItem";
 import "./PlaceList.css";
 

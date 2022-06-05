@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NewPlace from "./places/pages/NewPlace";
 import Users from "./user/pages/Users";
 import UserPlaces from "./places/pages/UserPlaces";
-import MainNavigation from "./shared/Navigation/MainNavigation";
+import UpdatePlace from "./places/pages/UpdatePlace";
+import MainNavigation from "./shared/components/Navigation/MainNavigation";
 
+/*the order matters cuz /places/new can be read as a placeId and then this Route will be overrided */
 const App = () => {
   return (
     <Router>
@@ -20,6 +22,9 @@ const App = () => {
           </Route>
           <Route path="/places/new" exact={true}>
             <NewPlace />
+          </Route>
+          <Route path="/places/:placeId" exact={true}>
+            <UpdatePlace />
           </Route>
         </Switch>
       </main>

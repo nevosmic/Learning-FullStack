@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 
-import { validate } from "../../utils/validators";
+import { validate } from "../../../utils/validators";
 import "./Input.css";
 
 const inputReducer = (state, action) => {
@@ -25,9 +25,9 @@ const inputReducer = (state, action) => {
 };
 const Input = (props) => {
   const [currentState, dispatch] = useReducer(inputReducer, {
-    value: "",
+    value: props.initialValue || "",
     isTouched: false,
-    isValid: false,
+    isValid: props.initialValidity || false,
   });
 
   /*update input in NewPlace every time the value and isValid changing */
@@ -39,8 +39,7 @@ const Input = (props) => {
   }, [id, value, isValid, onInput]);
 
   const changeHandler = (event) => {
-    //validate value
-    //store value
+    //validate & store value
     dispatch({
       type: "CHANGE",
       val: event.target.value,
@@ -53,6 +52,7 @@ const Input = (props) => {
       type: "TOUCH",
     });
   };
+
   const element =
     props.element === "input" ? (
       <input

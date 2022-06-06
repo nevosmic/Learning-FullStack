@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import Card from "../../shared/components/UIElements/Card/Card";
 import Button from "../../shared/components/FormElements/Button/Button";
 import Input from "../../shared/components/FormElements/Input/Input";
 import {
@@ -26,7 +27,7 @@ const DUMMY_PLACES = [
   },
   {
     id: "p2",
-    title: "Empire State Building",
+    title: "Emp. State Building",
     description: "One of the most famous sky scrapers in the world!",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg",
@@ -39,7 +40,7 @@ const DUMMY_PLACES = [
   },
 ];
 
-const UpdatePlace = (props) => {
+const UpdatePlace = () => {
   const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
 
@@ -63,19 +64,22 @@ const UpdatePlace = (props) => {
   will call formReducer that will create a new state which will re-render this 
   component and call setFormData again*/
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: identifiedPlace.title,
-          isValid: true,
+    if (identifiedPlace) {
+      setFormData(
+        {
+          title: {
+            value: identifiedPlace.title,
+            isValid: true,
+          },
+          description: {
+            value: identifiedPlace.description,
+            isValid: true,
+          },
         },
-        description: {
-          value: identifiedPlace.description,
-          isValid: true,
-        },
-      },
-      true
-    );
+        true
+      );
+    }
+
     setIsLoading(false);
   }, [setFormData, identifiedPlace]);
 
@@ -88,7 +92,9 @@ const UpdatePlace = (props) => {
   if (!identifiedPlace) {
     return (
       <div className="center">
-        <h2>Could not find place</h2>
+        <Card>
+          <h2>Could not find place</h2>
+        </Card>
       </div>
     );
   }
@@ -105,13 +111,13 @@ const UpdatePlace = (props) => {
       <Input
         id="title"
         element="input"
-        type="text"
+        // type="text"
         label="Title"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title"
         onInput={inputHandler}
         initialValue={formState.inputs.title.value}
-        initialValidity={formState.inputs.title.isValid}
+        initialValid={formState.inputs.title.isValid}
       />
       <Input
         id="description"
@@ -122,7 +128,7 @@ const UpdatePlace = (props) => {
         errorText="Please enter a valid description (at least 5 characters.)"
         onInput={inputHandler}
         initialValue={formState.inputs.description.value}
-        initialValidity={formState.inputs.description.isValid}
+        initialValid={formState.inputs.description.isValid}
       />
       <Button type="submit" disabled={!formState.isValid}>
         Update Place

@@ -8,10 +8,16 @@ import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
   const [showMapModal, setShowMapModal] = useState(false);
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const openMapModalHandler = () => setShowMapModal(true);
   const closeMapModalHandler = () => setShowMapModal(false);
 
+  const openDeleteModalHandler = () => setShowDeleteModal(true);
+  const closeDeleteModalHandler = () => setShowDeleteModal(false);
+  const confirmDeleteHandler = () => {
+    setShowDeleteModal(false);
+    console.log("DELETING...");
+  };
   /*  <iframe
             title="map"
             width="100%"
@@ -48,6 +54,28 @@ const PlaceItem = (props) => {
           <Map center={props.coordinates} zoom={16} />
         </div>
       </Modal>
+      <Modal
+        show={showDeleteModal}
+        onCancel={closeDeleteModalHandler}
+        header="Are you sure?"
+        //contentClass="place-item__modal-content"
+        footerClass="place-item__modal-actions"
+        footer={
+          <Fragment>
+            <Button inverse onClick={closeDeleteModalHandler}>
+              CANCEL
+            </Button>
+            <Button danger onClick={confirmDeleteHandler}>
+              DELETE
+            </Button>
+          </Fragment>
+        }
+      >
+        <p>
+          Do you want to proceed and delete this place? Please note that it
+          can't be undone thereafter.
+        </p>
+      </Modal>
       <li className="place-item">
         <Card className="place-item__content">
           <div className="place-item__image">
@@ -63,7 +91,9 @@ const PlaceItem = (props) => {
               VIEW ON MAP
             </Button>
             <Button to={`/places/${props.id}`}>EDIT</Button>
-            <Button danger>DELETE</Button>
+            <Button danger onClick={openDeleteModalHandler}>
+              DELETE
+            </Button>
           </div>
         </Card>
       </li>

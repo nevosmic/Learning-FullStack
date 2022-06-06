@@ -40,7 +40,6 @@ const NewPlace = () => {
       <Input
         id="title"
         element="input"
-        type="text"
         label="Title"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title"
@@ -49,7 +48,6 @@ const NewPlace = () => {
       <Input
         id="description"
         element="textarea"
-        type="text"
         label="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (at least 5 characters.)"
@@ -58,10 +56,9 @@ const NewPlace = () => {
       <Input
         id="address"
         element="input"
-        type="text"
         label="Address"
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid address"
+        errorText="Please enter a valid addressץ"
         onInput={inputHandler}
       />
       <Button type="submit" disabled={!formState.isValid}>

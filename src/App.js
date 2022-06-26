@@ -16,13 +16,16 @@ import { AuthContext } from "./shared/components/context/auth-context";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
 
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
+    setUserId(uid);
   });
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   });
 
   let routes;
@@ -66,7 +69,12 @@ const App = () => {
     /*Every component that is rapped in AuthContext has access to it.
     Once the value change all the components that listen to this context will re-render*/
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{
+        isLoggedIn: isLoggedIn,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
     >
       <Router>
         <MainNavigation />

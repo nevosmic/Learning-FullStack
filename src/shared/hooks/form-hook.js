@@ -1,5 +1,6 @@
 import { useCallback, useReducer } from "react";
 
+// TODO explanation
 const formReducer = (state, action) => {
   switch (action.type) {
     case "INPUT_CHANGE":
@@ -50,6 +51,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
       isValid: isValid,
       inputId: id,
     });
+    // console.log("form-hook: VALUE: ", value);
   }, []);
 
   const setFormData = useCallback((inputData, formValidity) => {

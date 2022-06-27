@@ -77,7 +77,6 @@ const PlaceItem = (props) => {
         show={showDeleteModal}
         onCancel={closeDeleteModalHandler}
         header="Are you sure?"
-        //contentClass="place-item__modal-content"
         footerClass="place-item__modal-actions"
         footer={
           <Fragment>
@@ -110,10 +109,10 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapModalHandler}>
               VIEW ON MAP
             </Button>
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button to={`/places/${props.id}`}>EDIT</Button>
             )}
-            {auth.isLoggedIn && (
+            {auth.userId === props.creatorId && (
               <Button danger onClick={openDeleteModalHandler}>
                 DELETE
               </Button>

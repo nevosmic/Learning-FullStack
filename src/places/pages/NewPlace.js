@@ -42,7 +42,6 @@ const NewPlace = () => {
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     //insert to backend
-
     try {
       const response = await sendRequest(
         "http://localhost:5000/api/places",

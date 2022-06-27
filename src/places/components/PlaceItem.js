@@ -5,9 +5,13 @@ import Card from "../../shared/components/UIElements/Card/Card";
 import Modal from "../../shared/components/UIElements/Modal/Modal";
 import Map from "../../shared/components/UIElements/Map/Map";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [showMapModal, setShowMapModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -16,9 +20,21 @@ const PlaceItem = (props) => {
 
   const openDeleteModalHandler = () => setShowDeleteModal(true);
   const closeDeleteModalHandler = () => setShowDeleteModal(false);
-  const confirmDeleteHandler = () => {
+
+  const confirmDeleteHandler = async () => {
     setShowDeleteModal(false);
     console.log("DELETING...");
+    try {
+      const response = await sendRequest(
+        `http://localhost:5000/api/places/${props.id}`,
+        "DELETE"
+      );
+      console.log(response);
+      // update this user places (I want to re-load current page)
+      props.onDelete(props.id);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
   /*  <iframe
             title="map"
@@ -44,6 +60,7 @@ const PlaceItem = (props) => {
 
   return (
     <Fragment>
+      <ErrorModal error={error} onClear={clearError} />
       <Modal
         show={showMapModal}
         onCancel={closeMapModalHandler}
@@ -80,6 +97,7 @@ const PlaceItem = (props) => {
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
+          {isLoading && <LoadingSpinner asOverlay={true} />}
           <div className="place-item__image">
             <img src={props.image} alt={props.title} />
           </div>

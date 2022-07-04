@@ -43,7 +43,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
     isValid: initialFormValidity,
   });
 
-  // re-use this function and not create it again
+  //useCallback-> re-use this function and not create it again
   const inputHandler = useCallback((id, value, isValid) => {
     dispatch({
       type: "INPUT_CHANGE",

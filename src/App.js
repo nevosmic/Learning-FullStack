@@ -21,12 +21,12 @@ const App = () => {
   const login = useCallback((uid) => {
     setIsLoggedIn(true);
     setUserId(uid);
-  });
+  }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserId(null);
-  });
+  }, []);
 
   let routes;
   if (isLoggedIn) {

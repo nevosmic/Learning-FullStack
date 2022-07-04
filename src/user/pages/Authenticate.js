@@ -5,6 +5,7 @@ import Input from "../../shared/components/FormElements/Input/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
 
 import {
   VALIDATOR_REQUIRE,
@@ -41,6 +42,7 @@ const Authenticate = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -53,6 +55,10 @@ const Authenticate = () => {
             value: "",
             isValid: false,
           },
+          image: {
+            value: null,
+            isValid: false,
+          },
         },
         false
       );
@@ -63,6 +69,8 @@ const Authenticate = () => {
   //fires whenever we login/signup
   const authenticateSubmitHandler = async (event) => {
     event.preventDefault();
+
+    console.log("formState.inputs: ", formState.inputs);
     if (isLoginMode) {
       //LOGIN
       console.log("frontend login BEFORE FETCH");
@@ -118,9 +126,12 @@ const Authenticate = () => {
               type="text"
               label="Your Name"
               validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a valid username."
+              errorText="Please enter a valid name."
               onInput={inputHandler}
             />
+          )}
+          {!isLoginMode && (
+            <ImageUpload center id="image" onInput={inputHandler} />
           )}
           <Input
             id="email"

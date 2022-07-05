@@ -9,7 +9,7 @@ export const useHttpClient = () => {
   /* useCallback so that this function never gets re-created
    when the components that uses this hook re-renders*/
   const sendRequest = useCallback(
-    async (url, method = "GET", headers = {}, body = null) => {
+    async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController(); //used to cancel the request
       activeHttpRequests.current.push(httpAbortCtrl);
@@ -18,8 +18,8 @@ export const useHttpClient = () => {
         //send an http request with fetch/axios/..
         const response = await fetch(url, {
           method,
-          headers,
           body,
+          headers,
           signal: httpAbortCtrl.signal, // link abortcontroller to this request
         });
 

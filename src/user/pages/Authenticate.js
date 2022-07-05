@@ -78,12 +78,13 @@ const Authenticate = () => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/login",
           "POST",
-          { "Content-Type": "application/json" },
+
           // these values are valid- submit button if we have a valid form
           JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
-          })
+          }),
+          { "Content-Type": "application/json" }
         );
         auth.login(responseData.user.id);
       } catch (err) {
@@ -91,17 +92,22 @@ const Authenticate = () => {
       }
     } else {
       //SIGNUP
+      //image is a binary data no JSON, FormData instead
       try {
+        const formData = new FormData();
+        console.log("CREATE FORM DATA");
+        formData.append("email", formState.inputs.email.value);
+        formData.append("name", formState.inputs.name.value);
+        formData.append("password", formState.inputs.password.value);
+        //in backend i am looking for a req body key with the name 'image'
+        formData.append("image", formState.inputs.image.value);
+
         console.log("frontend signup BEFORE FETCH");
+
         const responseData = await sendRequest(
           "http://localhost:5000/api/users/signup",
           "POST",
-          { "Content-Type": "application/json" },
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          })
+          formData
         );
 
         auth.login(responseData.user.id); // setIsLoggedIn(true);

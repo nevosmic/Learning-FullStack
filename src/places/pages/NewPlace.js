@@ -3,6 +3,10 @@ import { useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
+
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
@@ -10,8 +14,7 @@ import {
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/components/context/auth-context";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+
 import "./PlaceForm.css";
 
 const NewPlace = () => {
@@ -33,6 +36,10 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
   );
@@ -41,18 +48,22 @@ const NewPlace = () => {
 
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
+
+    console.log("formState.inputs: ", formState.inputs);
+    const formData = new FormData();
+    console.log("CREATE FORM DATA");
+    formData.append("title", formState.inputs.title.value);
+    formData.append("description", formState.inputs.description.value);
+    formData.append("address", formState.inputs.address.value);
+    formData.append("creator", auth.userId);
+    //in backend i am looking for a req body key with the name 'image'
+    formData.append("image", formState.inputs.image.value);
     //insert to backend
     try {
       const response = await sendRequest(
         "http://localhost:5000/api/places",
         "POST",
-        { "Content-Type": "application/json" },
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId,
-        })
+        formData
       );
       console.log(response);
       //Redirect the user to the starting page
@@ -93,7 +104,13 @@ const NewPlace = () => {
           errorText="Please enter a valid address."
           onInput={inputHandler}
         />
-        <Button type="submit" disabled={!formState.isValid}>
+        <ImageUpload
+          center
+          id="image"
+          onInput={inputHandler}
+          errorText="Please provide an image."
+        />
+        <Button center type="submit" disabled={!formState.isValid}>
           ADD PLACE
         </Button>
       </form>

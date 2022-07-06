@@ -66,7 +66,7 @@ const Authenticate = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  //fires whenever we login/signup
+  //fires whenever login/signup
   const authenticateSubmitHandler = async (event) => {
     event.preventDefault();
 
@@ -137,7 +137,12 @@ const Authenticate = () => {
             />
           )}
           {!isLoginMode && (
-            <ImageUpload center id="image" onInput={inputHandler} />
+            <ImageUpload
+              center
+              id="image"
+              onInput={inputHandler}
+              errorText="Please provide an image."
+            />
           )}
           <Input
             id="email"

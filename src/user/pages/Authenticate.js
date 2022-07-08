@@ -111,7 +111,7 @@ const Authenticate = () => {
           formData
         );
 
-        auth.login(responseData.user.id); // setIsLoggedIn(true);
+        auth.login(responseData.userId, responseData.token); // setIsLoggedIn(true);
       } catch (err) {
         console.log("err:", err);
       }

@@ -86,7 +86,8 @@ const Authenticate = () => {
           }),
           { "Content-Type": "application/json" }
         );
-        auth.login(responseData.user.id);
+        // Token I get from backend
+        auth.login(responseData.userId, responseData.token);
       } catch (err) {
         console.log(err);
       }

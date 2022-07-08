@@ -15,21 +15,21 @@ import Authenticate from "./user/pages/Authenticate";
 import { AuthContext } from "./shared/components/context/auth-context";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
 
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, token) => {
+    setToken(token);
     setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
   }, []);
 
   let routes;
-  if (isLoggedIn) {
+  if (token) {
     /*the order matters cuz /places/new can be read as a placeId and then this Route will be overrided */
     routes = (
       <Switch>
@@ -70,7 +70,8 @@ const App = () => {
     Once the value change all the components that listen to this context will re-render*/
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token, //!! convert string to true and null to false
+        token: token,
         userId: userId,
         login: login,
         logout: logout,

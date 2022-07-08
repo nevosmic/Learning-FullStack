@@ -50,22 +50,21 @@ const NewPlace = () => {
     event.preventDefault();
 
     console.log("formState.inputs: ", formState.inputs);
-    const formData = new FormData();
-    console.log("CREATE FORM DATA");
-    formData.append("title", formState.inputs.title.value);
-    formData.append("description", formState.inputs.description.value);
-    formData.append("address", formState.inputs.address.value);
-    formData.append("creator", auth.userId);
-    //in backend i am looking for a req body key with the name 'image'
-    formData.append("image", formState.inputs.image.value);
+
     //insert to backend
     try {
-      const response = await sendRequest(
-        "http://localhost:5000/api/places",
-        "POST",
-        formData
-      );
-      console.log(response);
+      const formData = new FormData();
+      console.log("CREATE FORM DATA");
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("creator", auth.userId);
+      //in backend i am looking for a req body key with the name 'image'
+      formData.append("image", formState.inputs.image.value);
+      await sendRequest("http://localhost:5000/api/places", "POST", formData, {
+        Authorization: "Bearer " + auth.token,
+      });
+      //console.log("response: ", response);
       //Redirect the user to the starting page
       historyObject.push("/");
     } catch (err) {
@@ -110,7 +109,7 @@ const NewPlace = () => {
           onInput={inputHandler}
           errorText="Please provide an image."
         />
-        <Button center type="submit" disabled={!formState.isValid}>
+        <Button type="submit" disabled={!formState.isValid}>
           ADD PLACE
         </Button>
       </form>

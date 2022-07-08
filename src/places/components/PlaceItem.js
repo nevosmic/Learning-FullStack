@@ -27,7 +27,9 @@ const PlaceItem = (props) => {
     try {
       const response = await sendRequest(
         `http://localhost:5000/api/places/${props.id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + auth.token }
       );
       console.log(response);
       // update this user places (I want to re-load current page)

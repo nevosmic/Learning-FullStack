@@ -83,7 +83,10 @@ setFormData will call dispatch action SET_DATA->
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
       );
       console.log(responseData);
       historyObject.push(`/${auth.userId}/places`);

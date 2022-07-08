@@ -32,7 +32,7 @@ export const useHttpClient = () => {
 
         // 500/400 not considered an error cuz it is a response
         if (!response.ok) {
-          console.log(responseData.message);
+          //console.log(responseData.message);
           //response status is 400'sh/500'sh
           throw new Error(responseData.message); //my error messages from backend
         }

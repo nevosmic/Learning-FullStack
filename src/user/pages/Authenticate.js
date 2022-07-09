@@ -76,7 +76,7 @@ const Authenticate = () => {
       console.log("frontend login BEFORE FETCH");
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          process.env.REACT_APP_BACKEND_URL + "/users/login",
           "POST",
 
           // these values are valid- submit button if we have a valid form
@@ -106,7 +106,7 @@ const Authenticate = () => {
         console.log("frontend signup BEFORE FETCH");
 
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          process.env.REACT_APP_BACKEND_URL + "/users/signup",
           "POST",
           formData
         );

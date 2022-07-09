@@ -46,7 +46,7 @@ setFormData will call dispatch action SET_DATA->
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/places/${placeId}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`
         );
         setLoadedPlace(responseData.place);
         //show place data in the form BEFOR updating the place
@@ -76,7 +76,7 @@ setFormData will call dispatch action SET_DATA->
     //insert to backend
     try {
       const responseData = await sendRequest(
-        `http://localhost:5000/api/places/${placeId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/${placeId}`,
         "PATCH",
 
         JSON.stringify({

@@ -61,10 +61,14 @@ const NewPlace = () => {
       //formData.append("creator", auth.userId); DONT NEED IT ANYMORE
       //in backend i am looking for a req body key with the name 'image'
       formData.append("image", formState.inputs.image.value);
-      await sendRequest("http://localhost:5000/api/places", "POST", formData, {
-        Authorization: "Bearer " + auth.token,
-      });
-      //console.log("response: ", response);
+      await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + "/places",
+        "POST",
+        formData,
+        {
+          Authorization: "Bearer " + auth.token,
+        }
+      );
       //Redirect the user to the starting page
       historyObject.push("/");
     } catch (err) {

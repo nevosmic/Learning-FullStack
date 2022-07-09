@@ -58,7 +58,7 @@ const NewPlace = () => {
       formData.append("title", formState.inputs.title.value);
       formData.append("description", formState.inputs.description.value);
       formData.append("address", formState.inputs.address.value);
-      formData.append("creator", auth.userId);
+      //formData.append("creator", auth.userId); DONT NEED IT ANYMORE
       //in backend i am looking for a req body key with the name 'image'
       formData.append("image", formState.inputs.image.value);
       await sendRequest("http://localhost:5000/api/places", "POST", formData, {

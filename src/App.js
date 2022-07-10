@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -6,16 +6,26 @@ import {
   Switch,
 } from "react-router-dom";
 
-import Users from "./user/pages/Users";
-import NewPlace from "./places/pages/NewPlace";
+//import Users from "./user/pages/Users";
+//import NewPlace from "./places/pages/NewPlace";
 
-import UserPlaces from "./places/pages/UserPlaces";
-import UpdatePlace from "./places/pages/UpdatePlace";
+//import UserPlaces from "./places/pages/UserPlaces";
+//import UpdatePlace from "./places/pages/UpdatePlace";
+//import Authenticate from "./user/pages/Authenticate";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
-import Authenticate from "./user/pages/Authenticate";
 import { AuthContext } from "./shared/components/context/auth-context";
 import { useAuthenticate } from "./shared/hooks/authenticate-hook";
+import LoadingSpinner from "./shared/components/UIElements/LoadingSpinner/LoadingSpinner";
+
+// On demand loading
+const Users = React.lazy(() => import("./user/pages/Users"));
+const NewPlace = React.lazy(() => import("./places/pages/NewPlace"));
+const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
+const UpdatePlace = React.lazy(() => import("./places/pages/UpdatePlace"));
+const Authenticate = React.lazy(() => import("./user/pages/Authenticate"));
+
 //TODO: add a state isCheckingAuth=useState(true)-display a message: please wait.setIsCheckingAuth(false) inside useEffect
+
 const App = () => {
   const { token, login, logout, userId } = useAuthenticate();
 
@@ -70,7 +80,17 @@ const App = () => {
     >
       <Router>
         <MainNavigation />
-        <main>{routes}</main>
+        <main>
+          <Suspense
+            fallback={
+              <div className="center">
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            {routes}
+          </Suspense>
+        </main>
       </Router>
     </AuthContext.Provider>
   );
